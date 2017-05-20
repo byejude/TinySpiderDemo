@@ -1,7 +1,10 @@
 #!usr/bin/env python2
 # -*- coding: UTF-8 -*-
 import url_manage
-f
+import html_downloader
+import html_parse
+import html_outputer
+
 
 
 class spider_main(object):
@@ -18,15 +21,13 @@ class spider_main(object):
             try:
                 new_url = self.urls.get_new_url()
                 print 'craw %d:%s'% (count,new_url)
-                html_contants = self.downloader.download(new_url)
-                new_urls,new_data = self.parser.parse(new_url,html_contants)
+                html_content = self.downloader.download(new_url)
+                new_urls,new_data = self.parser.parse(new_url,html_content)
                 self.urls.add_new_urls(new_urls)
                 self.outputer.collect_data(new_data)
-                if count == 100:
+                if count == 10:
                     break
                 count += 1
-
-
 
             except:
                 print 'craw failed'
@@ -36,7 +37,7 @@ class spider_main(object):
 
 
 if __name__ == '__main__':
-    root_uri = 'http://baike.baidu.com/item/Python'
+    root_url = 'http://baike.baidu.com/item/Python'
     spider = spider_main()
     spider.craw(root_url)
 
